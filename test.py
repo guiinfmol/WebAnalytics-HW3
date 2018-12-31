@@ -1,9 +1,14 @@
 from boltons import queueutils as qu
+import Beam
+
+# FUNCTIONAL DEMO
 
 def confusion_matrix(dataset, s, target):
     assert isinstance(dataset, list)
+    target = dataset[0].index(target)
     dt = dataset[:]
-    subgroup = [dataset[i] for i in s]
+    #subgroup = [dataset[i] for i in s]
+    subgroup = s
     dt = [i for i in dt if i not in subgroup]
 
     total = len(dataset)
@@ -16,35 +21,39 @@ def confusion_matrix(dataset, s, target):
     return [[positive_target_subgroup, negative_target_subgroup],[positive_target_dt, negative_target_dt]]
 
 def WARcc(dataset, subgroup, target):
-    cf = confusion_matrix(dataset, subgroup, target)
+    cf = confusion_matrix(dataset, subgroup, target[0])
 
     return cf[0][0] - (cf[0][0] + cf[0][1]) * (cf[0][0] + cf[1][0])
 
 
+
 if __name__ == '__main__':
 
-    test_dataset = [[0, 22, False, False, 28000, 'male', False],
-                    [1, 22, False, True, 32000, 'female', False],
-                    [2, 22, True, True, 24000, 'male', False],
-                    [3, 22, False, False, 27000, 'male', False],
-                    [4, 22, True, True, 32000, 'female', False],
-                    [5, 22, True, True, 30000, 'female', True],
-                    [6, 22, True, True, 58000, 'male', True],
-                    [7, 22, True, False, 52000, 'male', True],
-                    [8, 22, False, True, 40000, 'female', True],
-                    [9, 22, True, True, 28000, 'female', True]]
+    types = ['numeric', 'binary', 'binary', 'numeric', 'nominal', 'binary']
+    targets = ['class']
+    test_dataset = [['age', 'married', 'own house', 'income', 'gender', 'class'],
+                    [22, False, False, 28000, 'male', False],
+                    [46, False, True, 32000, 'female', False],
+                    [24, True, True, 24000, 'male', False],
+                    [25, False, False, 27000, 'male', False],
+                    [29, True, True, 32000, 'female', False],
+                    [45, True, True, 30000, 'female', True],
+                    [63, True, True, 58000, 'male', True],
+                    [36, True, False, 52000, 'male', True],
+                    [23, False, True, 40000, 'female', True],
+                    [50, True, True, 28000, 'female', True]]
 
-    cf = confusion_matrix(test_dataset, [2, 4, 6, 1], 6)
-    war = WARcc(test_dataset, [2, 4, 6, 1], 6)
+    refinement = Beam.refinement
+    quality_mes = WARcc
 
-    #print(cf)
-    #print(war)
 
-    a = [3,4,5]
+    res = Beam.beam_algorithm(test_dataset, quality_mes, refinement, 2, 2, 4, 4, set(), targets, types)
 
-    [a.remove(i) for i in [3,4]]
+    while res:
+        print(res.pop())
 
-    print((a))
+
+
 
 
 
