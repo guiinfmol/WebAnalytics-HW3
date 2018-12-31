@@ -58,8 +58,8 @@ if __name__ == '__main__':
     targets,             # Names of the features treated as targets
     types): 
     '''
-    res = Beam.beam_algorithm(test_dataset, quality_mes, refinement, 2, 2, 4, 4, set(), targets, types)
-    print("TOP q descriptors are:")
+    res = Beam.beam_algorithm(test_dataset, quality_mes, refinement, 3, 3, 4, 5, set(), targets, types)
+    print("TOP q descriptions are:")
     print("-----------------------")
     while res:
         desc = res.pop()
