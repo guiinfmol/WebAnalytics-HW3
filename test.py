@@ -46,11 +46,29 @@ if __name__ == '__main__':
     refinement = Beam.refinement
     quality_mes = WARcc
 
-
+    '''
+    (omega,               # Dataset
+    phi,                 # Quality measure
+    eta,                 # Refinement operator
+    w,                   # Beam width
+    d,                   # Beam depth
+    b,                   # Numbers of bins n
+    q,                   # Result set size q
+    c,                   # Constraints set c
+    targets,             # Names of the features treated as targets
+    types): 
+    '''
     res = Beam.beam_algorithm(test_dataset, quality_mes, refinement, 2, 2, 4, 4, set(), targets, types)
-
+    print("TOP q descriptors are:")
+    print("-----------------------")
     while res:
-        print(res.pop())
+        desc = res.pop()
+        s = Beam.get_subgroup(desc, test_dataset)
+        qual = WARcc(test_dataset, s, targets)
+        print(desc)
+        print(qual)
+        print("-----------------------")
+
 
 
 
