@@ -15,6 +15,9 @@ types = ['nominal' for _ in range(0, 20)]
 types[9] = 'binary'
 types[10] = 'binary'
 
+'''In the lines above the work flow is simple: we reed the csv file, we only take the first 19 features, also we create
+the 'types' array (needed for the beam algorithm), we declare of all the types as nominal except for the two target 
+variables which are binary'''
 
 if __name__ == '__main__':
     '''def beam_algorithm(omega,  # Dataset
@@ -29,7 +32,7 @@ if __name__ == '__main__':
                        types): 
     '''
 
-    omega = data
+    omega = data  # Sample dataset
     phi = Functions.yuleQualityMeasure
     eta = Beam.refinement
     w = 2

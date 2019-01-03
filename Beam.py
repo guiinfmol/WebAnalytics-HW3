@@ -45,9 +45,9 @@ def beam_algorithm(omega,               # Dataset
             for desc in a_set:
                 # We compute the quality of the description
                 sub = get_subgroup(desc, omega[1:])
-                #quality = phi(omega[1:], sub, target_ind)
+                #quality = phi(omega[1:], sub, target_ind) I have moved the computation of the quality below
                 # If the description meets all the constraints
-                if satisfies_all(desc, c) and len(sub)>0:
+                if satisfies_all(desc, c) and len(sub)>0: # This way we assure that the subgroups lenght are > 0.
                     quality = phi(omega[1:], sub, target_ind)
                     # Then we add this to the beam and the result set with priority quality...
                     insert_with_priority(result_set, desc, -quality, q)
@@ -60,6 +60,7 @@ def beam_algorithm(omega,               # Dataset
     return result_set
 
 
+# Refinement function as stated in the reference article
 def refinement(seed, omega, types, b, att_indices):
 
     res = []
@@ -134,7 +135,7 @@ def neq(a, b):
 
 
 def satisfies_all(desc, c):
-    return len(desc) > 0
+    return True
 
 
 def get_subgroup(description, dataset):
