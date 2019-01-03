@@ -1,31 +1,8 @@
 from boltons import queueutils as qu
 import Beam
+import math
 
 # FUNCTIONAL DEMO
-
-def confusion_matrix(dataset, s, target):
-    assert isinstance(dataset, list)
-    target = dataset[0].index(target)
-    dt = dataset[:]
-    #subgroup = [dataset[i] for i in s]
-    subgroup = s
-    dt = [i for i in dt if i not in subgroup]
-
-    total = len(dataset)
-
-    positive_target_dt = len([i for i in dt if i[target]]) / total
-    negative_target_dt = len([i for i in dt if not i[target]]) / total
-    positive_target_subgroup = len([i for i in subgroup if i[target]]) / total
-    negative_target_subgroup = len([i for i in subgroup if not i[target]]) / total
-
-    return [[positive_target_subgroup, negative_target_subgroup],[positive_target_dt, negative_target_dt]]
-
-def WARcc(dataset, subgroup, target):
-    cf = confusion_matrix(dataset, subgroup, target[0])
-
-    return cf[0][0] - (cf[0][0] + cf[0][1]) * (cf[0][0] + cf[1][0])
-
-
 
 if __name__ == '__main__':
 
@@ -59,6 +36,9 @@ if __name__ == '__main__':
     types): 
     '''
     res = Beam.beam_algorithm(test_dataset, quality_mes, refinement, 3, 3, 4, 5, set(), targets, types)
+
+    print(res)
+
     print("TOP q descriptions are:")
     print("-----------------------")
     while res:
@@ -70,6 +50,8 @@ if __name__ == '__main__':
         print("-----------------------")
 
 
+
+    print(math.fabs(13))
 
 
 

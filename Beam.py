@@ -2,7 +2,6 @@ from boltons import queueutils as qu
 from collections import deque
 import math
 
-
 def beam_algorithm(omega,               # Dataset
                    phi,                 # Quality measure
                    eta,                 # Refinement operator
@@ -40,15 +39,16 @@ def beam_algorithm(omega,               # Dataset
             seed = candidate_q.popleft()
 
             # Here we refine. Eta passed as parameter is a function responsible for the refinement of the seed
-            a_set = eta(seed, omega, types, b, att_indices)  # Refinement set... eta [seed]
+            a_set = eta(seed, omega[1:], types, b, att_indices)  # Refinement set... eta [seed]
 
             # For each description in the refined set
             for desc in a_set:
                 # We compute the quality of the description
-                sub = get_subgroup(desc, omega)
-                quality = phi(omega, sub, targets)
+                sub = get_subgroup(desc, omega[1:])
+                #quality = phi(omega[1:], sub, target_ind)
                 # If the description meets all the constraints
-                if satisfies_all(desc, c):
+                if satisfies_all(desc, c) and len(sub)>0:
+                    quality = phi(omega[1:], sub, target_ind)
                     # Then we add this to the beam and the result set with priority quality...
                     insert_with_priority(result_set, desc, -quality, q)
                     insert_with_priority(beam, desc, -quality, w)
@@ -75,7 +75,7 @@ def refinement(seed, omega, types, b, att_indices):
 
         if types[i] == 'numeric':
 
-            s = get_subgroup(seed, omega)
+            s = get_subgroup(seed, omega[1:])
             all_values = [float(entry[i]) for entry in s]
 
             all_values = sorted(all_values)
@@ -134,7 +134,7 @@ def neq(a, b):
 
 
 def satisfies_all(desc, c):
-    return True
+    return len(desc) > 0
 
 
 def get_subgroup(description, dataset):
