@@ -2,31 +2,43 @@ import math
 import csv
 from datetime import datetime
 import time
-from boltons import queueutils as qu
 import Beam
+import PriorityQ as pq
 
 def yuleQualityMeasure(dataset, subgroup, targets):
 
     subgroup_comp = [i for i in dataset if i not in subgroup]
-    yuleQsub = yuleQ(subgroup, targets)
-    yuleQsub_comp = yuleQ(subgroup_comp, targets)
+    yuleQsub = yuleQ(subgroup, targets, dataset)
+    yuleQsub_comp = yuleQ(subgroup_comp, targets, dataset)
 
     yule = math.fabs(yuleQsub - yuleQsub_comp)
 
     return yule * entropy(len(subgroup), len(dataset))
 
 
-def yuleQ(s, targets):
+def yuleQ(s, targets, dataset):
 
     target1 = targets[0]
     target2 = targets[1]
 
-    n1 = len([i for i in s if i[target1]])
-    n2 = len([i for i in s if not i[target1]])
-    n3 = len([i for i in s if i[target2]])
-    n4 = len([i for i in s if not i[target2]])
+    all_val_targ1 = set([a[target1] for a in dataset])
+    all_val_targ2 = set([a[target2] for a in dataset])
 
-    res = ((n1*n4) - (n2*n3))/(n1*n4+n1*n3)
+    target1val1 = all_val_targ1.pop()
+    target1val2 = all_val_targ1.pop()
+
+    target2val1 = all_val_targ2.pop()
+    target2val2 = all_val_targ2.pop()
+
+    n1 = len([i for i in s if i[target1] == target1val1])
+    n2 = len([i for i in s if i[target1] == target1val2])
+    n3 = len([i for i in s if i[target2] == target2val1])
+    n4 = len([i for i in s if not i[target2] == target2val2])
+
+    if ((n1*n4)+(n1*n3)) == 0:
+        res = 0.
+    else:
+        res = ((n1 * n4) - (n2 * n3)) / ((n1 * n4) + (n1 * n3))
     return res
 
 
@@ -44,7 +56,6 @@ def entropy(subgroup_size, total_size):
 
 def confusion_matrix(dataset, s, target):
     assert isinstance(dataset, list)
-    target = dataset[0].index(target)
     dt = dataset[:]
     #subgroup = [dataset[i] for i in s]
     subgroup = s
@@ -61,7 +72,6 @@ def confusion_matrix(dataset, s, target):
 
 def WARcc(dataset, subgroup, target):
     cf = confusion_matrix(dataset, subgroup, target[0])
-
     return cf[0][0] - (cf[0][0] + cf[0][1]) * (cf[0][0] + cf[1][0])
 
 
@@ -120,20 +130,19 @@ def dataPreProcessing(file, features, targets):
 
     types = [types[i] for i in range(0, len(types)) if i in list_of_indices]
 
+    for i in final_data:
+        if not len(i) == 9:
+            final_data.remove(i)
+
     return final_data, types
 
-def representSolution(sol, phi, omega, targets):
-    assert isinstance(sol, qu.PriorityQueue)
+def representSolution(sol, names):
+    assert isinstance(sol, pq.PriorityQ)
 
-    names = omega[0]
-    target_ind = [names.index(a) for a in targets]
-
-    while sol:
-        desc = sol.pop()
-        sub = Beam.get_subgroup(desc, omega)
-        quality = yuleQualityMeasure(omega, sub, target_ind)
+    for item in sol.dict_tuple_priority.keys():
+        quality = sol.dict_tuple_priority.get(item)
         res = ""
-        for i in desc:
+        for i in item:
             res+=str(names[i[0]]) +" "+ representFunction(i[2]) + " " + str(i[1]) + "| "
         res+="quality = "+str(quality)
         print(res)

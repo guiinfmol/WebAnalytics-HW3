@@ -1,6 +1,7 @@
-from boltons import queueutils as qu
 from collections import deque
 import math
+import PriorityQ as pq
+
 
 def beam_algorithm(omega,               # Dataset
                    phi,                 # Quality measure
@@ -22,19 +23,19 @@ def beam_algorithm(omega,               # Dataset
 
     candidate_q = deque([])
     candidate_q.append(())
-    result_set = qu.PriorityQueue()  # This must be a priority queue of size = result_set_size
+    result_set = pq.PriorityQ(q)  # This must be a priority queue of size = result_set_size
 
     # This is an iteration over the N levels provided as parameter depth (d)
     for i in range(0, d):
 
-
         # We create the beam as an empty PriorityQueue
         # The size of this beam must be always w at most. This constraint is checked when we add a new item to the
         # queue. That's what insert_with_priority function (defined below) is for. (It was not built-in with the lib)
-        beam = qu.PriorityQueue()  # This is a priority queue of size = w
+        beam = pq.PriorityQ(w)  # This is a priority queue of size = w
 
         # Loop with guard condition 'when candidate_q is not empty then...'
         while bool(candidate_q):
+
             # Extract a candidate to be refine
             seed = candidate_q.popleft()
 
@@ -46,16 +47,19 @@ def beam_algorithm(omega,               # Dataset
                 # We compute the quality of the description
                 sub = get_subgroup(desc, omega[1:])
                 #quality = phi(omega[1:], sub, target_ind) I have moved the computation of the quality below
-                # If the description meets all the constraints
+
+                # If the description meets all the constraints (no constraints applied in our model) and the lenght of
+                # the subgroup is > 0. When we compute the quality outside the if{} we cant get divison by zero error.
                 if satisfies_all(desc, c) and len(sub)>0: # This way we assure that the subgroups lenght are > 0.
                     quality = phi(omega[1:], sub, target_ind)
+                    print(desc)
                     # Then we add this to the beam and the result set with priority quality...
-                    insert_with_priority(result_set, desc, -quality, q)
-                    insert_with_priority(beam, desc, -quality, w)
+                    result_set.insert_with_piority(tuple(desc), quality)
+                    beam.insert_with_piority(tuple(desc), quality)
 
         while len(beam) != 0:
-            index = beam.pop()
-            candidate_q.append(index)
+            element = beam.get_front_element()
+            candidate_q.append(element)
 
     return result_set
 
@@ -89,6 +93,7 @@ def refinement(seed, omega, types, b, att_indices):
                 local0 = aux[:]
                 local0.append((i, s, func1))
                 local1 = aux[:]
+
                 local1.append((i, s, func2))
                 res.append(local0)
                 res.append(local1)
@@ -155,13 +160,6 @@ def get_subgroup(description, dataset):
     return res
 
 
-def insert_with_priority(queue, item, priority, max_size):
-    assert isinstance(queue, qu.SortedPriorityQueue)
-    item = tuple(item)
-    if len(queue) == max_size:
-        queue.pop()
-        queue.add(item, priority)
-    else:
-        queue.add(item, priority)
+
 
 
