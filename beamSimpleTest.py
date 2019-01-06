@@ -1,5 +1,4 @@
-import Beam
-import Functions
+from src import Functions, Beam
 
 data = [ ['age', 'married', 'own house', 'income', 'gender', 'class'],
 [22, False,False, 20000, 'male, ',False],

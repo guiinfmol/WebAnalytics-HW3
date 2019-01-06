@@ -1,6 +1,6 @@
 from collections import deque
 import math
-import PriorityQ as pq
+from src import PriorityQ as pq
 
 
 def beam_algorithm(omega,               # Dataset

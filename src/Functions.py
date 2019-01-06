@@ -2,8 +2,8 @@ import math
 import csv
 from datetime import datetime
 import time
-import Beam
-import PriorityQ as pq
+from src import PriorityQ as pq, Beam
+
 
 def yuleQualityMeasure(dataset, subgroup, targets):
 
@@ -142,9 +142,14 @@ def representSolution(sol, names):
     for item in sol.dict_tuple_priority.keys():
         quality = sol.dict_tuple_priority.get(item)
         res = ""
+        first = True
         for i in item:
-            res+=str(names[i[0]]) +" "+ representFunction(i[2]) + " " + str(i[1]) + "| "
-        res+="quality = "+str(quality)
+            if first:
+                res += str(names[i[0]]) + " " + representFunction(i[2]) + " " + str(i[1]) + " "
+                first = not first
+            elif not first:
+                res+=str("^ " + names[i[0]]) +" "+ representFunction(i[2]) + " " + str(i[1])
+        res+=", quality = "+str(quality)
         print(res)
 
 def representFunction(func):

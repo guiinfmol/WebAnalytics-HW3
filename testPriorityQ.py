@@ -1,4 +1,4 @@
-import PriorityQ as pq
+from src import PriorityQ as pq
 
 q = pq.PriorityQ(4)
 

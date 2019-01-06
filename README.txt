@@ -1,6 +1,6 @@
 The project follows the following structure:
 
-    - root_folder /:
+    - folder /src:
         Here there are all the files needed to be coded to solve the problem:
             · Beam.py includes de Beam Search Algorithm as well as some other auxiliary functions needed by the algorithm
             method. We took as an example both the theory slides and the pseudocode mentioned in the article written
@@ -13,6 +13,6 @@ The project follows the following structure:
             Measure and the representation of the solution.
     - folder /data:
         It includes a bunch of files that are samples (modified or not) extracted from the dataset that we were given.
-    - folder /tests:
-        Some simple tests to test our algorithm and parts of our code.
+    - root_folder /:
+        Some simple tests to test our algorithm and parts of our code along with a functional demo
 
