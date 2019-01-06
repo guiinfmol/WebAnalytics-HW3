@@ -6,7 +6,6 @@ from timeit import default_timer as timer
 file = open('data/finalDataset.csv', encoding='latin-1')
 a = csv.reader(file, dialect='excel-tab')
 
-
 # A little bit of processing of the data. Make data a list as well as removing rows with missing attributes.
 data =[]
 
@@ -14,7 +13,6 @@ for i in a:
     data.append(i)
 
 ref_length = len(data[0])
-
 
 print("Analysing ", len(data[1:]), " rows.")
 

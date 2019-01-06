@@ -7,13 +7,16 @@ from src import PriorityQ as pq, Beam
 
 def yuleQualityMeasure(dataset, subgroup, targets):
 
-    subgroup_comp = [i for i in dataset if i not in subgroup]
+    subgroup_comp = [i for i in dataset[1:] if i not in subgroup]
     yuleQsub = yuleQ(subgroup, targets, dataset)
+    print("Yule Q subgroup", yuleQsub)
     yuleQsub_comp = yuleQ(subgroup_comp, targets, dataset)
-
+    print("Yule Q subgroup complement", yuleQsub_comp)
     yule = math.fabs(yuleQsub - yuleQsub_comp)
 
-    return yule * entropy(len(subgroup), len(dataset))
+    res = yule * entropy(len(subgroup), len(dataset))
+    print("Yule Q quality measure", res)
+    return res
 
 
 def yuleQ(s, targets, dataset):
@@ -21,8 +24,8 @@ def yuleQ(s, targets, dataset):
     target1 = targets[0]
     target2 = targets[1]
 
-    all_val_targ1 = set([a[target1] for a in dataset])
-    all_val_targ2 = set([a[target2] for a in dataset])
+    all_val_targ1 = sorted(list(set([a[target1] for a in dataset[1:]])))
+    all_val_targ2 = sorted(list(set([a[target2] for a in dataset[1:]])))
 
     target1val1 = all_val_targ1.pop()
     target1val2 = all_val_targ1.pop()
