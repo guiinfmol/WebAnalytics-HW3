@@ -13,14 +13,21 @@ class PriorityQ:
         return res
 
     def insert_with_piority(self, item, priority):
+        check = True
 
-        if len(self.q) == self.size:
+        if isinstance(item, tuple):
+            for i in self.dict_tuple_priority.keys():
+                if set(item) == set(i):
+                    check = False
+                    break
+
+        if len(self.q) == self.size and check:
             min_priority = min([a for a in self.dict_tuple_priority.values()])
             if priority >= min_priority:
                 self.remove_item_less_priority()
                 self.q.add(item, priority)
                 self.dict_tuple_priority.setdefault(item, priority)
-        else:
+        elif check:
             self.q.add(item, priority)
             self.dict_tuple_priority.setdefault(item, priority)
 

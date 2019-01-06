@@ -22,3 +22,7 @@ a = q.get_front_element()
 print(a)
 b = q.get_front_element()
 print(b)
+
+a = tuple([2,3])
+b = tuple([2,3])
+print(a == b)

@@ -1,3 +1,18 @@
-In test.py there are some naive testing of some things I wanted to check.
-In Beam.py there is the implementation of the Beam Algorithm from the article mentioned in the assignment along with 
-some needed functions. By the time I have uploeaded this is not finish (although I believe I'm almost done).
+The project follows the following structure:
+
+    - root_folder /:
+        Here there are all the files needed to be coded to solve the problem:
+            · Beam.py includes de Beam Search Algorithm as well as some other auxiliary functions needed by the algorithm
+            method. We took as an example both the theory slides and the pseudocode mentioned in the article written
+            by W. Duivesteijn et al. with few modifications. One of them is that when the refinement functions faces a
+            nominal attribute, it won't create both (feature = value), (feature != value) for descriprions, instead it
+            creates only (feature = value). This decision has been made in order to boost the algorithm's performance.
+            · PriorityQ is a class where we implemented the PriorityQueues needed in Beam.py. The core of this class is
+            priority queues in the boltons package, with a slight modification in order to meet our requirements.
+            · Functions.py is just a bunch of auxiliary functions. Here it is defined among others the Yule Q Quality
+            Measure and the representation of the solution.
+    - folder /data:
+        It includes a bunch of files that are samples (modified or not) extracted from the dataset that we were given.
+    - folder /tests:
+        Some simple tests to test our algorithm and parts of our code.
+

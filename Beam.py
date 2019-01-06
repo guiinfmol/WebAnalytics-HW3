@@ -52,7 +52,6 @@ def beam_algorithm(omega,               # Dataset
                 # the subgroup is > 0. When we compute the quality outside the if{} we cant get divison by zero error.
                 if satisfies_all(desc, c) and len(sub)>0: # This way we assure that the subgroups lenght are > 0.
                     quality = phi(omega[1:], sub, target_ind)
-                    print(desc)
                     # Then we add this to the beam and the result set with priority quality...
                     result_set.insert_with_piority(tuple(desc), quality)
                     beam.insert_with_piority(tuple(desc), quality)
@@ -115,10 +114,10 @@ def refinement(seed, omega, types, b, att_indices):
                 func2 = neq
                 local0 = aux[:]
                 local0.append((i, j, func1))
-                local1 = aux[:]
-                local1.append((i, j, func2))
+                #local1 = aux[:]
+                #local1.append((i, j, func2))
                 res.append(local0)
-                res.append(local1)
+                #res.append(local1)
 
     return res
 
