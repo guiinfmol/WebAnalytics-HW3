@@ -15,10 +15,8 @@ for i in a:
 
 ref_length = len(data[0])
 
-for i in data[1:]:
-    if len(i) != ref_length:
-        data.remove(i)
 
+print("Analysing ", len(data[1:]), " rows.")
 
 # All features used in the example are nominal, except for returning visitor that is going to be binary (0/1-represented)
 names = data[0]
