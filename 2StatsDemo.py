@@ -25,6 +25,9 @@ for i in a:
 
 ref_length = len(data[0])
 
+
+file.close()
+
 print("Analysing ", len(data[1:]), " rows.")
 
 # All features used in the example are nominal, except for returning visitor that is going to be binary (0/1-represented)
