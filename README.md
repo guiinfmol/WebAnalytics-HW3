@@ -1,5 +1,5 @@
 # Web Analytics
-The project follows the following structure:
+This repository contains the project for HW3 of Web Analytics and has the following structure:
 
     - folder /src:
         Here there are all the files needed to be coded to solve the problem:
