@@ -1,3 +1,4 @@
+# Web Analytics
 The project follows the following structure:
 
     - folder /src:
