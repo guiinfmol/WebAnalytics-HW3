@@ -9,3 +9,6 @@ The structure is the following:
     * *PriorityQ.py*  contains a class where we implemented the PriorityQueues needed in Beam. The core of this class is priority queues in the boltons package, with a slight modification in order to meet our requirements.
     * *Functions.py* is just a bunch of auxiliary functions. Here it is defined among others the Yule Q Quality Measure and the representation of the solution.
 * **tests**: Include a simple script (no unit testing) testing that the PriorityQ works.
+* *data_preprocessing.R* is a R file that preprocess the data from the original data so that it can be used later in Python.
+* *main.py* execution of the algorithm, it expects *data/final_dataset.csv* to exist. To execute just install the ```requirements.txt´´´
+
