@@ -13,22 +13,3 @@ The structure is the following:
 * *main.py* execution of the algorithm, it expects *data/final_dataset.csv* to exist. To execute just install the ```requirements.txt``` and execute ```python main.py```.
 * *stats.py* prints the stats of the dataset. Just run with ```python main.py```.
 
----
-references:
-- id: fenner2012a
-  title: One-click science marketing
-  author:
-  - family: Fenner
-    given: Martin
-  container-title: Nature Materials
-  volume: 11
-  URL: 'http://dx.doi.org/10.1038/nmat3283'
-  DOI: 10.1038/nmat3283
-  issue: 4
-  publisher: Nature Publishing Group
-  page: 261-263
-  type: article-journal
-  issued:
-    year: 2012
-    month: 3
----
