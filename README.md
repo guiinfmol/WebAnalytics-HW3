@@ -1,5 +1,10 @@
-# Web Analytics
-This repository contains the project for HW3 of Web Analytics and has the following structure:
+# Beam Search Algorithm
+Project part of HW3 from the course 2IID0 - Web Analytics @ TU Eindhoven. Contains the Python code as well an R script to obtain the dataset from the original one provided by StudePortals. 
+
+The structure is the following:
+
+* src:
+ 
 
     - folder /src:
         Here there are all the files needed to be coded to solve the problem:
