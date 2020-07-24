@@ -4,7 +4,7 @@ Project part of HW3 from the course 2IID0 - Web Analytics @ TU Eindhoven. Contai
 The structure is the following:
 
 * src: Here there are all the files needed to be coded to solve the problem.
- - Beam.py includes de Beam Search Algorithm as well as some other auxiliary functions needed by the algorithm method. We took as an example both the theory slides and the pseudocode mentioned in the article written by W. Duivesteijn et al. with few modifications. One of them is that when the refinement functions faces a
+            -Beam.py includes de Beam Search Algorithm as well as some other auxiliary functions needed by the algorithm method. We took as an example both the theory slides and the pseudocode mentioned in the article written by W. Duivesteijn et al. with few modifications. One of them is that when the refinement functions faces a
 nominal attribute, it won't create both (feature = value), (feature != value) for descriprions, instead it creates only (feature = value). This decision has been made in order to boost the algorithm's performance.
             - PriorityQ is a class where we implemented the PriorityQueues needed in Beam.py. The core of this class is
             priority queues in the boltons package, with a slight modification in order to meet our requirements.
