@@ -9,6 +9,4 @@ The structure is the following:
     * Functions.py is just a bunch of auxiliary functions. Here it is defined among others the Yule Q Quality
             Measure and the representation of the solution.
 * **data**: It includes a bunch of files that are samples (modified or not) extracted from the dataset that we were given.
-    - root_folder /:
-        Some simple tests to test our algorithm and parts of our code along with a functional demo
-
+* **tests**: Include a simple script (no unit testing) testing that the PriorityQ works
