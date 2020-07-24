@@ -10,5 +10,6 @@ The structure is the following:
     * *Functions.py* is just a bunch of auxiliary functions. Here it is defined among others the Yule Q Quality Measure and the representation of the solution.
 * **tests**: Include a simple script (no unit testing) testing that the PriorityQ works.
 * *data_preprocessing.R* is a R file that preprocess the data from the original data so that it can be used later in Python.
-* *main.py* execution of the algorithm, it expects *data/final_dataset.csv* to exist. To execute just install the ```requirements.txt``` and execute ```python main.py```
+* *main.py* execution of the algorithm, it expects *data/final_dataset.csv* to exist. To execute just install the ```requirements.txt``` and execute ```python main.py```.
+* *stats.py* prints the stats of the dataset. Just run with ```python main.py```.
 
