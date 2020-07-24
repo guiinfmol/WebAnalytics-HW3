@@ -2,7 +2,7 @@
 library("class")
 library("dplyr")
 
-sportal = read.csv2('Web_Anlaytics_Nov_2018_final.csv', sep="\t", dec=".",
+sportal = read.csv2('data/Web_Anlaytics_Nov_2018_final.csv', sep="\t", dec=".",
                    na.strings = "", as.is = TRUE,
                    stringsAsFactors = FALSE)
 
@@ -20,7 +20,7 @@ sportal <- within(sportal, rm("Browser.Version",
                               "Referring.URL",
                               "City",
                               "Region",
-                              "Goal.1.Converted", 
+                              "Goal.1.Converted",
                               "Goal.1.Converted.Time"))
 
 #reduce rows for dev purposes
@@ -39,7 +39,7 @@ for (i in 1:nrow(sportal)) {
   #take width and convert to numeric to do comparisons later
   width <- strsplit(sportal[i,"Screen.Resolution"], "x")[[1]][1]
   width <- as.numeric(width)
-  
+
   #bin it using Bootstrap's grid values
   if (width < 576){
     new_width <- "Extra Small"
@@ -52,7 +52,7 @@ for (i in 1:nrow(sportal)) {
   } else {
     new_width <- "Extra Large"
   }
-  
+
   sportal[i,"Screen.Resolution"] <- new_width
 
 }
@@ -60,31 +60,31 @@ for (i in 1:nrow(sportal)) {
 sort(table(sportal$Screen.Resolution), decreasing = T)
 
 
-#Bin windows versions 
+#Bin windows versions
 for (i in 1:nrow(sportal)) {
   #chech if dealing with windows
   if(grepl("Windows", sportal[i,"OS"], fixed=TRUE))
   {
-    if(grepl("10", sportal[i,"OS"], fixed=TRUE) || 
-       grepl("8.1", sportal[i,"OS"], fixed=TRUE) || 
-       grepl("8", sportal[i,"OS"], fixed=TRUE) || 
-       grepl("7", sportal[i,"OS"], fixed=TRUE) || 
-       grepl("RT", sportal[i,"OS"], fixed=TRUE) || 
+    if(grepl("10", sportal[i,"OS"], fixed=TRUE) ||
+       grepl("8.1", sportal[i,"OS"], fixed=TRUE) ||
+       grepl("8", sportal[i,"OS"], fixed=TRUE) ||
+       grepl("7", sportal[i,"OS"], fixed=TRUE) ||
+       grepl("RT", sportal[i,"OS"], fixed=TRUE) ||
        grepl("Vista", sportal[i,"OS"], fixed=TRUE)
       )
       {
         sportal[i,"OS"] <- "Windows New"
     }
-    if(grepl("XP", sportal[i,"OS"], fixed=TRUE) || 
+    if(grepl("XP", sportal[i,"OS"], fixed=TRUE) ||
        grepl("2000", sportal[i,"OS"], fixed=TRUE)
     )
     {
       sportal[i,"OS"] <- "Windows Old"
     }
-    
-    
+
+
   }
-  
+
   #handle entires that just have windwos with no version attached to it
   if(identical(sportal[i,"OS"], "Windows")){
     sportal[i,"OS"] <- "Windows Old"
@@ -96,16 +96,16 @@ sort(table(sportal$OS), decreasing = T)
 
 
 
-#Hande odd OS 
+#Hande odd OS
 for (i in 1:nrow(sportal)) {
- 
+
   #handle Linux
   if(identical(sportal[i,"OS"], "Ubuntu") ||
      identical(sportal[i,"OS"], "Fedora")
      ){
     sportal[i,"OS"] <- "Linux"
   }
-  
+
   #handle odd OS
   if(identical(sportal[i,"OS"], "Maemo") ||
      identical(sportal[i,"OS"], "FreeBSD") ||
@@ -116,7 +116,7 @@ for (i in 1:nrow(sportal)) {
   ){
     sportal[i,"OS"] <- "Other"
   }
-  
+
 }
 
 
@@ -130,12 +130,12 @@ country_tresh <- 50
 countries <- table(sportal$Country)
 for (i in 1:nrow(sportal)) {
   country_name <- sportal[i,"Country"]
-  
+
   if(countries[country_name] < country_tresh){
     sportal[i,"Country"] <- "Other"
   }
-  
-  
+
+
 }
 
 sort(table(sportal$Country), decreasing = T)
@@ -147,17 +147,17 @@ lan_tresh <- 50
 languages <- table(sportal$User.Language)
 for (i in 1:nrow(sportal)) {
   language_name <- sportal[i,"User.Language"]
-  
+
   if(languages[language_name] < lan_tresh){
     sportal[i,"User.Language"] <- "Other"
   }
-  
-  
+
+
 }
 
 for (i in 1:nrow(sportal)) {
   returning <- sportal[i,"Returning.Visitor"]
-  
+
   if(returning == 'TRUE'){
     sportal[i,"Returning.Visitor"] <- 1
   }else{
@@ -179,14 +179,4 @@ for(i in colnames(sportal)){
 
 colnames(sportal) <- a
 
-write.table(sportal, file = paste(getwd(), "/modified.csv", sep=""), sep="\t", dec=".", row.names = FALSE, quote = FALSE)
-
-
-
-
-
-
-
-
-
-
+write.table(sportal, file = paste(getwd(), "data/final_dataset.csv", sep=""), sep="\t", dec=".", row.names = FALSE, quote = FALSE)
