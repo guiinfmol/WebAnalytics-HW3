@@ -3,7 +3,7 @@ import csv
 from timeit import default_timer as timer
 
 # Here we read the data
-file = open('data/finalDataset.csv', encoding='latin-1')
+file = open('data/final_dataset.csv', encoding='latin-1')
 a = csv.reader(file, dialect='excel-tab')
 
 # A little bit of processing of the data. Make data a list as well as removing rows with missing attributes.

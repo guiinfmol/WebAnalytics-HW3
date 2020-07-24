@@ -14,7 +14,7 @@ Traffic Source = direct_traffic ^ User Language = en-us, quality = 0.06157116948
 '''
 eq = Beam.eq
 
-file = open('data/finalDataset.csv', encoding='latin-1')
+file = open('data/final_dataset.csv', encoding='latin-1')
 a = csv.reader(file, dialect='excel-tab')
 
 # A little bit of processing of the data. Make data a list as well as removing rows with missing attributes.
@@ -77,5 +77,3 @@ print("Subgroup 4", len(subgroup4))
 f.yuleQualityMeasure(data, subgroup4, [4,5])
 print("Subgroup 5", len(subgroup5))
 f.yuleQualityMeasure(data, subgroup5, [4,5])
-
-
