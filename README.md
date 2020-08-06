@@ -1,5 +1,5 @@
 # Beam Search Algorithm
-Project part of HW3 from the course 2IID0 - Web Analytics @ TU Eindhoven. Contains the Python code as well an R script to obtain the dataset from the original one provided by StudePortals. 
+Project part of HW3 from the course 2IID0 - Web Analytics @ TU Eindhoven. Contains the Python code as well an R script to obtain the dataset from the original one provided by Studyportals. The goal was to perform A/B testing on the dataset.
 
 The structure is the following:
 * **data**: Contains both the original dataset and the one extracted with the R script used by the Python script implementation. 
